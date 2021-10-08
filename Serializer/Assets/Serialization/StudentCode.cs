@@ -12,6 +12,7 @@ namespace Assets.Serialization
     // The partial keyword just means we're adding these three methods to the code in Serializer.cs
     public partial class Serializer
     {
+
         /// <summary>
         /// Print out the serialization data for the specified object.
         /// </summary>
@@ -21,30 +22,30 @@ namespace Assets.Serialization
             switch (o)
             {
                 case null:
-                    throw new NotImplementedException("Fill me in");
+                    Write("null");
                     break;
 
                 case int i:
-                    throw new NotImplementedException("Fill me in");
+                    Write(i);
                     break;
 
                 case float f:
-                    throw new NotImplementedException("Fill me in");
+                    Write(f);
                     break;
 
                 // BUG: this doesn't handle strings that themselves contain quote marks
                 // but that doesn't really matter for an assignment like this, so I'm not
                 // going to confuse the reader by complicating the code to escape the strings.
                 case string s:
-                    throw new NotImplementedException("Fill me in");
+                    Write("\"" +s + "\"");
                     break;
 
                 case bool b:
-                    throw new NotImplementedException("Fill me in");
+                    Write(b);
                     break;
 
                 case IList list:
-                    throw new NotImplementedException("Fill me in");
+                    WriteList(list);
                     break;
 
                 default:
@@ -56,6 +57,9 @@ namespace Assets.Serialization
             }
         }
 
+        //Dictionary<TKey,TValue>
+        Dictionary<object,int> objectsID = new Dictionary<object,int>();
+        int initID = 0;
         /// <summary>
         /// Serialize a complex object (i.e. a class object)
         /// If this object has already been output, just output #id, where is is it's id from GetID.
@@ -64,7 +68,31 @@ namespace Assets.Serialization
         /// <param name="o">Object to serialize</param>
         private void WriteComplexObject(object o)
         {
-            throw new NotImplementedException("Fill me in");
+            //Determines whether the Dictionary<TKey,TValue> contains the specified key.
+            if(objectsID.ContainsKey(o)){
+                Write("#" + objectsID[o]);
+            }else{
+                int Id = initID++;
+                //Adds the specified key and value to the dictionary.
+                objectsID.Add(o,Id);
+                string start_text = "#" + Id + "{";
+                //Write("#" + Id);
+                WriteBracketedExpression(
+                    //start
+                    start_text,
+                    //generator
+                    () => {
+                        //is first one
+                        WriteField("type",o.GetType().Name,true);
+
+                        foreach(var i in Utilities.SerializedFields(o)){
+                            //not the first one
+                            WriteField(i.Key,i.Value,false);
+                        }
+                    },
+                    //end
+                    "}");
+            }
         }
     }
 
@@ -107,6 +135,9 @@ namespace Assets.Serialization
             }
         }
 
+                //Dictionary<TKey,TValue>
+        Dictionary<int,object> objectsID = new Dictionary<int,object>();
+
         /// <summary>
         /// Called when the next character is a #.  Read the object id of the object and return the
         /// object.  If that object id has already been read, return the object previously returned.
@@ -122,7 +153,10 @@ namespace Assets.Serialization
             SkipWhitespace();
 
             // You've got the id # of the object.  Are we done now?
-            throw new NotImplementedException("Fill me in");
+            if(objectsID.ContainsKey(id)){
+                return objectsID[id];
+
+            }
 
             // Assuming we aren't done, let's check to make sure there's a { next
             SkipWhitespace();
@@ -143,15 +177,16 @@ namespace Assets.Serialization
                 throw new Exception(
                     $"Expected a type name (a string) in 'type: ...' expression for object id {id}, but instead got {typeName}");
 
-            // Great!  Now what?
-            throw new NotImplementedException("Fill me in");
+            // Great!  Now what? --Make a new instance of the type with the specified name
+            object newObj = Utilities.MakeInstance(type);
+            objectsID[id] = newObj;
 
             // Read the fields until we run out of them
             while (!End && PeekChar != '}')
             {
                 var (field, value) = ReadField(id);
-                // We've got a field and a value.  Now what?
-                throw new NotImplementedException("Fill me in");
+                // We've got a field and a value.  Now what? --Update the value of a field in an object given the name of the field as a string.
+                Utilities.SetFieldByName(newObj,field,value);
             }
 
             if (End)
@@ -160,7 +195,7 @@ namespace Assets.Serialization
             GetChar();  // Swallow close bracket
 
             // We're done.  Now what?
-            throw new NotImplementedException("Fill me in");
+            return newObj;
         }
     }
 }
