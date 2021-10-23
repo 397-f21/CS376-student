@@ -21,11 +21,28 @@ public class Spawner : MonoBehaviour
     public float FreeRadius = 10;
 
     /// <summary>
+    /// initial start time
+    /// </summary>
+    public float currentTime = 0;
+
+    /// <summary>
+    /// Period the object should wait between spawne
+    /// </summary>
+    public float timeInterval = 10;
+
+    /// <summary>
     /// Check if we need to spawn and if so, do so.
     /// </summary>
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        if(currentTime > 0){
+            currentTime -= Time.deltaTime;
+            return;
+        }
+
+        var randomPosition = SpawnUtilities.RandomFreePoint(FreeRadius);
+        Instantiate(Prefab, new Vector3(randomPosition.x,randomPosition.y,0),Prefab.transform.rotation);
+        currentTime = timeInterval;
     }
 }

@@ -154,8 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 5538127891346134993, guid: d17fb8fff274e3a40a7441b74cb78bb5, type: 3}
   SpawnInterval: 20
-  NextSpawn: 0
   FreeRadius: 10
+  currentTime: 0
+  timeInterval: 10
 --- !u!4 &303900614
 Transform:
   m_ObjectHideFlags: 0
@@ -836,6 +837,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5326820314176126735, guid: 539e98f53f725f148a19ffb8403dd9b4, type: 3}
+      propertyPath: me
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5326820314176126735, guid: 539e98f53f725f148a19ffb8403dd9b4, type: 3}
+      propertyPath: rigidBody
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5552471421358010363, guid: 539e98f53f725f148a19ffb8403dd9b4, type: 3}
       propertyPath: m_Name
       value: Player

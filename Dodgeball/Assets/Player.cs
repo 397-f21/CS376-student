@@ -11,6 +11,13 @@ public class Player : MonoBehaviour
     /// </summary>
     public GameObject OrbPrefab;
 
+
+    /// <summary>
+    /// Our rigid body component
+    /// Used to apply forces so we can move around
+    /// </summary>
+    public Rigidbody2D rb;
+
     /// <summary>
     /// How fast our engines can accelerate us
     /// </summary>
@@ -28,6 +35,13 @@ public class Player : MonoBehaviour
 
 
     /// <summary>
+    /// initialize regidbody force of the player
+    /// <summary>
+    void Start(){
+        rb = GetComponent<Rigidbody2D> ();
+    }
+
+    /// <summary>
     /// Fire if the player is pushing the button for the Fire axis
     /// Unlike the Enemies, the player has no cooldown, so they shoot a whole blob of orbs
     /// The orb should be placed one unit "in front" of the player.  transform.right will give us a vector
@@ -37,7 +51,12 @@ public class Player : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void Update()
     {
-        // TODO
+        if(Input.GetButton("Fire")){
+            var playerPosition = rb.transform.position;
+            GameObject Orb = Instantiate(OrbPrefab, playerPosition + rb.transform.right, rb.transform.rotation);
+            var orbRb = Orb.GetComponent<Rigidbody2D>();
+            orbRb.velocity = rb.transform.right * OrbVelocity;
+        }
     }
 
     /// <summary>
@@ -49,7 +68,14 @@ public class Player : MonoBehaviour
     // ReSharper disable once UnusedMember.Local
     void FixedUpdate()
     {
-        // TODO
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+
+        var movement = new Vector2(x,y);
+        rb.AddForce(movement*EnginePower);
+
+        float z = Input.GetAxis("Rotate");
+        rb.angularVelocity = z* RotateSpeed ;
     }
 
     /// <summary>
