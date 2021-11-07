@@ -59,7 +59,7 @@ public class ProjectileThrower : MonoBehaviour {
     {
         return !IsOffScreen(o) && o.GetComponent<Rigidbody2D>().IsAwake();
     }
-
+    
     bool IsActive(Rigidbody2D rb)
     {
         return IsActive(rb.gameObject);
@@ -71,7 +71,17 @@ public class ProjectileThrower : MonoBehaviour {
     /// <returns></returns>
     bool WaitingForPhysicsToSettle()
     {
-        return true;  // Replace this
+        Rigidbody2D[] objs = FindObjectsOfType<Rigidbody2D>();
+        foreach (Rigidbody2D obj in objs)
+        {
+            if (IsActive(obj))
+            {
+                //returns true if there is any RigidBody2D that is on screen and awake
+                return true;
+            }
+
+        }
+        return false;
     }
 
     /// <summary>
@@ -86,6 +96,14 @@ public class ProjectileThrower : MonoBehaviour {
     internal void Update()
     {
         FireControl();
+        if(firingState >= ProjectileThrower.FiringState.Firing && !WaitingForPhysicsToSettle())
+        {
+            ResetForFiring();
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            ResetForFiring();
+        }
     }
 
     /// <summary>

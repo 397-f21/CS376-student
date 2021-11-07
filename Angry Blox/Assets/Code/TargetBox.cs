@@ -6,7 +6,7 @@ public class TargetBox : MonoBehaviour
     /// Targets that move past this point score automatically.
     /// </summary>
     public static float OffScreen;
-
+    bool alreadyScored = false;
     internal void Start() {
         OffScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width-100, 0, 0)).x;
     }
@@ -17,8 +17,23 @@ public class TargetBox : MonoBehaviour
             Scored();
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.transform.tag == "Ground")
+        {
+            Scored();
+        }
+    }
     private void Scored()
     {
-        // FILL ME IN
+        if (!alreadyScored)
+        {
+            var sr = GetComponent<SpriteRenderer>();
+            sr.color = Color.green;
+            var rb = GetComponent<Rigidbody2D>();
+            ScoreKeeper.AddToScore(rb.mass);
+        }
+
+        alreadyScored = true;
     }
 }
