@@ -1,0 +1,72 @@
+﻿11/12
+Starts working on my game
+Planing: 
+* build a platform game like Mario where the player can control their character to run, jump, and shoot. 
+* Need to build different animations for each state of the character, including Idel state, run state, jump state, and shoot state. 
+* Should have a moving wall, some moving monsters. Some coins to add the score, some traps to trigger. 
+* Could use free tilemap in unity asset store or search online
+* Make unexpected traps that greatly increase the difficulty.
+
+
+Aesthetic goals:
+* Challenge: Game as an obstacle course. Players should face some obstacles when playing, and gain pleasure when past certain obstacles.
+* Fantasy: Game as make-believe. The theme of the game should look like fantasy. So basically no pixel arts.
+Success signs:
+* urge to master something
+* making constant progress and gaining power
+* Hard-core
+Failure signs:
+* A player can’t measure his progress
+* A player feels that he can’t win
+* Lack of tension.
+
+
+Core loop:
+* Dodge traps, collect coins, kill monsters, power up, reach checkpoints 
+
+
+11/13
+* Constructing my first customized tilemap, took longer than I expected.
+* Issue1: the player is pretty unstable when hitting the terrain ground because the terrain is not plain. I fixed this by checking Rigidbody 2D-> Constraints -> Freeze Rotation z, which stops the character from rotating
+* Add character movement scrip: space for jump left and right key for movement.
+   * #TODO adds a cooldown time to jump, so the player cannot keep jumping higher by keeping pressing the space bar.
+* issue2: the player sprite render looks the same when running to left and right. I fixed this by adding SpriteRenderer.flipX = true when running to left in the character moving script. 
+* Make the camera follow the character by attaching the main camera to it. 
+* Needs to work more time on it tomorrow otherwise can’t finish on time.
+
+
+11/14
+* Finished construing the entire map, keeping it closed so the character can’t escape out of the scene.
+* Add taco and moving platform sprites
+   * Issue: The character doesn’t follow the movement of the platform when standing on it. Solved by making the platform parent of the character when collision. Should be only triggered when standing on top of the platform (not including the sides of the platform). But I choose to keep it as it is now due to the time limit. 
+* Add scores
+* Add hit-box to traps
+   * Issue: character can’t trigger the collision with the traps. Problem found: the original terrain box had a higher collision box than the trap hitbox. Solved by increasing the trap size. 
+* Add sound effects to jump, collect tacos, hit the trap, and reach the checkpoint
+   * Issue: Collect taco sound-triggered without collision with the character. Solved by unchecking the Play On Awake under Audio Source.
+* Make scene transfer when win, add a Play Again button
+* Forget to save my work, have to restart from 7 hours ago. LIFE IS GOOD =. =
+* 11/15 4:54 am: Finished all, starting writing instructions
+* Was planning to add attacks and monsters, give the character 3 lives, a new level, etc… will work more in the future.
+
+
+
+
+Postmortem:
+• Summarize what you originally set out to do 
+* build a platform game like Mario where the player can control their character to run, jump, and shoot. Players can make constant progress and gain power.
+• Summarize what your goals ended up being by the end 
+* build a platform game where the player can control their character to run, jump, dodge traps and collect items. Players should face some obstacles when playing, and gain pleasure when past certain obstacles.
+• Summarize what you accomplished of those goals 
+* In terms of the game, I accomplished all my goals, including controlling the character run, jump, dodge traps and collect items. In terms of my aesthetic goals, I made it less challenging (fewer traps) when designing the map. In general, challenge as an aesthetic goal has been met with a fantasy theme scene.
+• What went right? 
+* The game is challenging and players will face some obstacles when playing and gain pleasure when past certain obstacles.
+• What went wrong? 
+* Lack of tension. Should add monsters and allow the characters to attack.
+• What do you wish you knew at the start of the project that you know now? 
+* Don’t plan to do too many features, start from small. Remember to save working progress.
+• What did you learn in the process?
+* I learned how to make a 2D platformer game. 
+* I learned how to do animation in Unity
+* I learned how to construct a tilemap
+* I learned how to write efficient scrips.

@@ -1,0 +1,17 @@
+﻿* Scrolling background: http://staffwww.fullcoll.edu/dcraig/csharp/2D%20Scrolling%20Background%20in%20Unity.pdf
+* Ocean background:
+https://wallpaperaccess.com/4k-ocean-floor
+* submarine:
+http://clipart-library.com/submarine-cliparts.html
+* Bubble:
+https://toppng.com/show_download/105857/colorful-bubble-backgrounds-png/large
+* Net:
+http://clipart-library.com/clipart/trap-cliparts_15.htm
+* Fish:
+https://www.clipartmax.com/middle/m2H7K9K9G6H7b1Z5_piranha-clipart-angry-fish-decal-stickers-aggressive-piranha-librar-motorbike/
+https://www.cleanpng.com/png-vector-graphics-illustration-image-coloring-book-r-6201535/download-png.html
+https://www.pngaaa.com/detail/4159642
+* Sounds:
+https://mixkit.co/free-sound-effects/
+* Countdown Timer
+https://gamedevbeginner.com/how-to-make-countdown-timer-in-unity-minutes-seconds/
